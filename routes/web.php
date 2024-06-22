@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Blog\Admin\AdminPostController;
 use App\Http\Controllers\Blog\Admin\CategoryController;
 use App\Http\Controllers\Blog\PostController;
 use Illuminate\Support\Facades\Route;
@@ -29,10 +30,17 @@ $groupData = [
     'namespace' => 'App\Http\Controllers\Blog\Admin',
     'prefix' => 'admin/blog',
 ];
+
 Route::group($groupData, function () {
     //BlogCategory
     $methods = ['index','edit','store','update','create',];
+
     Route::resource('categories', CategoryController::class)
         ->only($methods)
         ->names('blog.admin.categories');
+
+    Route::resource('posts', AdminPostController::class)
+        ->except(['show'])                               //не робити маршрут для метода show
+        ->names('blog.admin.posts');
 });
+
