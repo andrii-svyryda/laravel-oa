@@ -11,4 +11,12 @@ class PostController extends Controller
     {
         return BlogPost::with(['user', 'category'])->get();
     }
+
+    /**
+     * Display the specified post.
+     */
+    public function show(string $id)
+    {
+        return BlogPost::with(['user', 'category'])->find($id);
+    }
 }
