@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DiggingDeeperController;
 use App\Http\Controllers\Blog\Admin\AdminPostController;
 use App\Http\Controllers\Blog\Admin\CategoryController;
 use App\Http\Controllers\Blog\PostController;
@@ -18,6 +19,14 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+});
+
+Route::group(['prefix' => 'digging_deeper'], function () {
+
+    Route::get('collections', [DiggingDeeperController::class, 'collections'])
+
+        ->name('digging_deeper.collections');
+
 });
 
 Route::resource('rest', RestTestController::class)->names('restTest');
