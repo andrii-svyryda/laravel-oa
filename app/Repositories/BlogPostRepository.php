@@ -38,6 +38,30 @@ class BlogPostRepository extends CoreRepository
 
         return $result;
     }
+
+    /**
+     * Отримати список статей
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function all()
+    {
+        $columns = ['id', 'title', 'slug', 'is_published', 'published_at', 'user_id', 'category_id',];
+
+        $result = $this->startConditions()
+            ->select($columns)
+            ->orderBy('id','DESC')
+            ->with([
+                'category' => function ($query) {
+                    $query->select(['id', 'title']);
+                },
+                //'category:id,title',
+                'user:id,name',
+            ]);
+
+        return $result;
+    }
+
     /**
      *  Отримати модель для редагування в адмінці
      *  @param int $id

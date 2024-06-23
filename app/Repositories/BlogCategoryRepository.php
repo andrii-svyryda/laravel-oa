@@ -74,4 +74,44 @@ class BlogCategoryRepository extends CoreRepository
 
         return $result;
     }
+
+    /**
+     * Отримати категорії
+     *
+     * @param int|null $perPage
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getAll()
+    {
+        $columns = ['id', 'title', 'parent_id'];
+
+        $result = $this
+            ->startConditions()
+            ->select($columns)
+            ->with(['parentCategory:id,title',])
+            ->get();
+
+        return $result;
+    }
+
+    /**
+     * Отримати категорію
+     *
+     * @param int|null $perPage
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function get($id)
+    {
+        $columns = ['id', 'slug', 'description', 'title', 'parent_id'];
+
+        $result = $this
+            ->startConditions()
+            ->select($columns)
+            ->with(['parentCategory:id,title',])
+            ->find($id);
+
+        return $result;
+    }
 }
